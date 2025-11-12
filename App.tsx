@@ -3,8 +3,9 @@ import { Workout } from './types';
 import Header from './components/Header';
 import HistoryPage from './pages/HistoryPage';
 import LogWorkoutPage from './pages/LogWorkoutPage';
+import ExercisesPage from './pages/ExercisesPage';
 
-type Page = 'history' | 'log';
+type Page = 'history' | 'log' | 'exercises';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('history');
@@ -70,6 +71,9 @@ const App: React.FC = () => {
               onCurrentWorkoutUpdate={setCurrentWorkout}
               onSaveWorkout={handleSaveWorkout} 
             />
+          )}
+          {currentPage === 'exercises' && (
+            <ExercisesPage workouts={workouts} />
           )}
         </main>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Page = 'history' | 'log';
+type Page = 'history' | 'log' | 'exercises';
 
 interface HeaderProps {
   currentPage: Page;
@@ -28,6 +28,9 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
       <nav className="flex space-x-2 p-1 bg-gray-100 rounded-lg">
         <button onClick={() => onNavigate('history')} className={navLinkClasses('history')}>
           History
+        </button>
+        <button onClick={() => onNavigate('exercises')} className={navLinkClasses('exercises')}>
+          Exercises
         </button>
         <button onClick={() => onNavigate('log')} className={navLinkClasses('log')}>
           Log New Workout
