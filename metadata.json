@@ -1,0 +1,5 @@
+{
+  "name": "Copy of morse: Voice-to-Workout Logger (Gemini)",
+  "description": "morse is an application that uses AI to transcribe weightlifting workout audio files (.wav) into a structured, visual log. It processes audio from your workouts and provides an interactive display of exercises, sets, reps, and weight, along with performance visualizations.",
+  "requestFramePermissions": []
+}
