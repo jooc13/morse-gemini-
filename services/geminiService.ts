@@ -1,14 +1,10 @@
 
+
 import { GoogleGenAI, Type } from "@google/genai";
-import { ParsedWorkoutData } from '../types';
+import { ParsedWorkoutData } from "../types";
 
-const API_KEY = process.env.API_KEY;
-
-if (!API_KEY) {
-    throw new Error("API_KEY environment variable is not set");
-}
-
-const ai = new GoogleGenAI({ apiKey: API_KEY });
+// FIX: Initialize GoogleGenAI directly with process.env.API_KEY as per the guidelines.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const workoutSchema = {
     type: Type.OBJECT,
@@ -26,6 +22,10 @@ const workoutSchema = {
                     name: {
                         type: Type.STRING,
                         description: "The name of the exercise, e.g., 'Bench Press', 'Squat'."
+                    },
+                    bodyPart: {
+                        type: Type.STRING,
+                        description: "The primary body part targeted by the exercise, e.g., 'Chest', 'Legs', 'Back'."
                     },
                     sets: {
                         type: Type.ARRAY,
@@ -50,7 +50,7 @@ const workoutSchema = {
                         }
                     }
                 },
-                required: ["name", "sets"]
+                required: ["name", "bodyPart", "sets"]
             }
         }
     },
@@ -60,7 +60,7 @@ const workoutSchema = {
 export async function parseWorkoutFromAudio(audioBase64: string, mimeType: string): Promise<ParsedWorkoutData> {
     const prompt = `
         Analyze the provided audio of a weightlifting workout session.
-        Identify each exercise, and for each exercise, list all sets with their corresponding reps and weight.
+        Identify each exercise, the primary body part it targets (e.g., Chest, Legs, Back), and for each exercise, list all sets with their corresponding reps and weight.
         Structure the output as a JSON object according to the provided schema.
         Common gym terms: 'a plate' or 'plates' means 45 lbs. 'a quarter' is 25 lbs.
         If the weight unit isn't specified, assume it is 'lbs'.
